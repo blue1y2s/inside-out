@@ -10,7 +10,7 @@ interface PersonaUniverseProps {
 }
 
 export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => {
-  const [layoutMode, setLayoutMode] = useState<'timeline' | 'humanoid'>('timeline');
+  const [layoutMode, setLayoutMode] = useState<'timeline' | 'humanoid' | 'castle'>('timeline');
 
   return (
     <div className="w-full h-full relative">
@@ -65,15 +65,21 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
       {/* Floating Action Button for Transformation */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40">
         <button
-          onClick={() => setLayoutMode(prev => prev === 'timeline' ? 'humanoid' : 'timeline')}
+          onClick={() => setLayoutMode(prev => {
+            if (prev === 'timeline') return 'humanoid';
+            if (prev === 'humanoid') return 'castle';
+            return 'timeline';
+          })}
           className={clsx(
             "group flex items-center gap-3 px-8 py-4 rounded-full border shadow-2xl transition-all duration-500 ease-out backdrop-blur-md",
             layoutMode === 'humanoid'
-              ? "bg-gallery-charcoal/90 border-gallery-charcoal text-[#CCFF00]"
-              : "bg-white/80 border-white text-gallery-charcoal hover:scale-105"
+              ? "bg-neutral-charcoal/90 border-neutral-charcoal text-[#CCFF00]"
+              : layoutMode === 'castle'
+                ? "bg-emotion-joy/90 border-emotion-joy text-neutral-charcoal shadow-[0_0_20px_rgba(255,215,0,0.5)]"
+                : "bg-white/80 border-white text-neutral-charcoal hover:scale-105"
           )}
         >
-          {layoutMode === 'timeline' ? (
+          {layoutMode === 'timeline' && (
             <>
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#CCFF00] opacity-75"></span>
@@ -81,9 +87,16 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
               </span>
               <span className="font-serif font-bold text-lg tracking-wide uppercase">Construct Persona</span>
             </>
-          ) : (
+          )}
+          {layoutMode === 'humanoid' && (
             <>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:rotate-180 transition-transform"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M12 4v16"></path></svg>
+              <span className="font-serif font-bold text-lg tracking-wide uppercase">Visit Memory Castle</span>
+            </>
+          )}
+          {layoutMode === 'castle' && (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-rotate-90 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               <span className="font-serif font-bold text-lg tracking-wide uppercase">Deconstruct</span>
             </>
           )}

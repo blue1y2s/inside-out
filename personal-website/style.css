@@ -281,8 +281,8 @@ body {
 .primary-btn {
     background: linear-gradient(135deg, var(--joy), var(--anxiety));
     color: white;
-    color: white;
     box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+    border: none;
 }
 
 .primary-btn:hover {
@@ -506,6 +506,34 @@ body {
     display: flex;
     gap: 1rem;
     justify-content: center;
+}
+
+.text-link {
+    color: var(--charcoal);
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.text-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--joy), var(--anxiety));
+    transition: width 0.3s ease;
+}
+
+.text-link:hover {
+    color: var(--anxiety);
+}
+
+.text-link:hover::after {
+    width: 100%;
 }
 
 /* ===== FOOTER ===== */

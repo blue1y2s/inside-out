@@ -16,6 +16,7 @@ export interface MemorySphere {
   color: string;
   timelinePosition: [number, number, number];
   humanoidPosition: [number, number, number];
+  castlePosition: [number, number, number];
 }
 
 export interface AvatarStats {

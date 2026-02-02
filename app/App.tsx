@@ -7,20 +7,40 @@ import { LanguageInsightsPanel } from './components/LanguageInsightsPanel';
 import { WhatIfStudio } from './components/WhatIfStudio';
 import { ExitReflection } from './components/ExitReflection';
 import { EmotionLegend } from './components/EmotionLegend';
+import { MemoryBankPanel } from './components/MemoryBankPanel';
 import { usePostAnalysis } from './hooks/usePostAnalysis';
 import { layoutMemorySpheres } from './utils/layout3d';
 import { computePersonaDimensions } from './utils/personaDimensions';
+import { saveMemories, loadMemories, deleteMemory } from './utils/memoryStorage';
 import { MemorySphere, AnalyzedPost, PersonaDimensions, TargetPersona, ScenePhase } from './types';
 import { clsx } from 'clsx';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
-type PresentationTab = 'target' | 'gap' | 'insights' | 'simulation' | 'hidden';
+type PresentationTab = 'target' | 'gap' | 'insights' | 'simulation' | 'memories' | 'hidden';
 
 function AppContent() {
   const [scenePhase, setScenePhase] = useState<ScenePhase>('caged');
   const [analyzedPosts, setAnalyzedPosts] = useState<AnalyzedPost[]>([]);
   const [spheres, setSpheres] = useState<MemorySphere[]>([]);
   const [currentDimensions, setCurrentDimensions] = useState<PersonaDimensions | null>(null);
+
+  // Initialize from storage
+  React.useEffect(() => {
+    const stored = loadMemories();
+    if (stored.length > 0) {
+      setAnalyzedPosts(stored);
+      setSpheres(layoutMemorySpheres(stored));
+      setCurrentDimensions(computePersonaDimensions(stored));
+      setScenePhase('universe'); // Go straight to universe if we have memories
+    }
+  }, []);
+
+  // Auto-save whenever analyzedPosts changes
+  React.useEffect(() => {
+    if (analyzedPosts.length > 0) {
+      saveMemories(analyzedPosts);
+    }
+  }, [analyzedPosts]);
   const [targetPersona, setTargetPersona] = useState<TargetPersona | null>(null);
 
   // UI States
@@ -68,6 +88,21 @@ function AppContent() {
       }
     } catch (e) {
       console.error("Generation failed:", e);
+    }
+  };
+
+  const handleDeleteMemory = (id: string) => {
+    const updatedPosts = deleteMemory(id);
+
+    // Update state to reflect deletion
+    setAnalyzedPosts(updatedPosts);
+    setSpheres(layoutMemorySpheres(updatedPosts));
+    setCurrentDimensions(computePersonaDimensions(updatedPosts));
+
+    // If we deleted everything, go back to caged/input
+    if (updatedPosts.length === 0) {
+      setScenePhase('input');
+      setUiHidden(false);
     }
   };
 
@@ -128,6 +163,9 @@ function AppContent() {
               {activeTab === 'simulation' && (
                 <WhatIfStudio currentPosts={analyzedPosts} currentDimensions={currentDimensions} targetPersona={targetPersona} />
               )}
+              {activeTab === 'memories' && (
+                <MemoryBankPanel memories={analyzedPosts} onDelete={handleDeleteMemory} />
+              )}
             </div>
           </div>
 
@@ -148,6 +186,17 @@ function AppContent() {
                   {t(`tabs.${tab}`)}
                 </button>
               ))}
+              <button
+                onClick={() => setActiveTab('memories')}
+                className={clsx(
+                  "px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 capitalize",
+                  activeTab === 'memories'
+                    ? "bg-emotion-joy/80 text-neutral-charcoal font-bold shadow-md shadow-emotion-joy/30 backdrop-blur-md"
+                    : "text-neutral-charcoal hover:text-neutral-charcoal hover:bg-white/60"
+                )}
+              >
+                Memories
+              </button>
             </div>
           </div>
 

@@ -6,7 +6,7 @@ import { MemorySphere } from '../types';
 
 interface MemorySphereMeshProps {
   data: MemorySphere;
-  mode: 'timeline' | 'humanoid';
+  mode: 'timeline' | 'humanoid' | 'castle';
 }
 
 export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }) => {
@@ -19,18 +19,22 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
   // Pre-calculate vectors
   const timelineVec = useMemo(() => new Vector3(...data.timelinePosition), [data.timelinePosition]);
   const humanoidVec = useMemo(() => new Vector3(...data.humanoidPosition), [data.humanoidPosition]);
+  // Use a fallback for castle position if it doesn't exist yet (migration safety)
+  const castleVec = useMemo(() => new Vector3(...(data.castlePosition || data.timelinePosition)), [data.castlePosition, data.timelinePosition]);
 
   useFrame((state) => {
     if (!meshRef.current) return;
     const time = state.clock.getElapsedTime();
 
     // 1. Determine Target Position
-    const targetBase = mode === 'timeline' ? timelineVec : humanoidVec;
+    let targetBase = timelineVec;
+    if (mode === 'humanoid') targetBase = humanoidVec;
+    if (mode === 'castle') targetBase = castleVec;
 
     // 2. Organic Float Intensity
-    // Timeline = High float, Humanoid = Low float (tight structure)
-    const floatAmp = mode === 'timeline' ? 0.2 : 0.01;
-    const floatFreq = mode === 'timeline' ? 1.0 : 3.0;
+    // Timeline = High float, Humanoid = Low float (tight structure), Castle = Low-medium (stable towers)
+    const floatAmp = mode === 'timeline' ? 0.2 : 0.05;
+    const floatFreq = mode === 'timeline' ? 1.0 : 2.0;
 
     const floatY = Math.sin(time * floatFreq + phase.current) * floatAmp;
     const floatX = Math.cos(time * 0.5 + phase.current) * (floatAmp * 0.5);
@@ -41,7 +45,7 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
     const targetWithFloat = targetBase.clone().add(new Vector3(floatX, floatY, 0));
 
     // Faster transition to humanoid for "snap" effect, slower back to timeline
-    const lerpSpeed = mode === 'humanoid' ? 0.08 : 0.05;
+    const lerpSpeed = mode === 'timeline' ? 0.05 : 0.08;
     currentPos.lerp(targetWithFloat, lerpSpeed);
 
     // 4. Scale & Rotation
