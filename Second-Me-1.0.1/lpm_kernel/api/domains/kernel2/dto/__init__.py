@@ -1,3 +1,0 @@
-"""
-data transfer object package
-"""
