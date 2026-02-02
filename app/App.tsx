@@ -80,7 +80,7 @@ function AppContent() {
   const isUniversePhase = scenePhase === 'universe';
 
   return (
-    <div className="relative w-full h-screen bg-gradient-to-br from-[#FFF8E7] via-[#F5F0FF] to-[#E8F4FF] text-gallery-charcoal overflow-hidden font-sans">
+    <div className="relative w-full h-screen bg-gradient-to-br from-neutral-cream via-[#F5F0FF] to-[#E8F4FF] text-neutral-charcoal overflow-hidden font-sans">
 
       {/* 3D Background */}
       <div className="absolute inset-0 z-0">
@@ -104,7 +104,7 @@ function AppContent() {
       <div className="absolute bottom-6 right-6 z-40">
         <button
           onClick={() => setLanguage(language === 'en' ? 'zh' : 'en')}
-          className="px-4 py-2 bg-white/40 backdrop-blur rounded-full text-gallery-charcoal border border-white hover:bg-white/80 transition-all text-xs font-bold uppercase tracking-wider shadow-sm"
+          className="px-4 py-2 bg-white/40 backdrop-blur-md rounded-full text-neutral-charcoal border border-white hover:bg-white/80 transition-all text-xs font-bold uppercase tracking-wider shadow-sm"
         >
           {language === 'en' ? 'EN / 中文' : '中文 / EN'}
         </button>
@@ -141,8 +141,8 @@ function AppContent() {
                   className={clsx(
                     "px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 capitalize",
                     activeTab === tab
-                      ? "bg-gallery-lime text-gallery-charcoal font-bold shadow-md shadow-gallery-lime/30"
-                      : "text-gallery-charcoal hover:text-gallery-charcoal hover:bg-white/60"
+                      ? "bg-emotion-joy/80 text-neutral-charcoal font-bold shadow-md shadow-emotion-joy/30 backdrop-blur-md"
+                      : "text-neutral-charcoal hover:text-neutral-charcoal hover:bg-white/60"
                   )}
                 >
                   {t(`tabs.${tab}`)}
@@ -161,7 +161,7 @@ function AppContent() {
         {isUniversePhase && (
           <button
             onClick={() => setScenePhase('input')}
-            className="p-3 bg-white/30 backdrop-blur rounded-full text-gallery-charcoal hover:bg-white/60 transition-all border border-white shadow-sm group flex items-center gap-2 pr-5"
+            className="p-3 bg-white/30 backdrop-blur-md rounded-full text-neutral-charcoal hover:bg-white/60 transition-all border border-white shadow-sm group flex items-center gap-2 pr-5"
             title={t('app.revise')}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform"><path d="M19 12H5" /><path d="M12 19l-7-7 7-7" /></svg>
@@ -175,17 +175,17 @@ function AppContent() {
         {isUniversePhase && (
           <button
             onClick={() => setShowExitReflection(true)}
-            className="p-3 bg-white/30 backdrop-blur rounded-full text-gallery-charcoal hover:bg-white/60 transition-all border border-white shadow-sm group"
+            className="p-3 bg-white/30 backdrop-blur-md rounded-full text-neutral-charcoal hover:bg-white/60 transition-all border border-white shadow-sm group"
             title={t('app.end_session')}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-gallery-lime transition-colors"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:text-emotion-anxiety transition-colors"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
           </button>
         )}
 
         {isUniversePhase && (
           <button
             onClick={() => setUiHidden(!uiHidden)}
-            className="p-3 bg-white/30 backdrop-blur rounded-full text-gallery-charcoal hover:bg-gallery-lime transition-all border border-white shadow-sm"
+            className="p-3 bg-white/30 backdrop-blur-md rounded-full text-neutral-charcoal hover:bg-emotion-joy hover:text-white transition-all border border-white shadow-sm"
             title={uiHidden ? "Show UI" : "Hide UI"}
           >
             {uiHidden ? (

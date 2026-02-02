@@ -107,9 +107,9 @@ const CagedContent: React.FC<CagedSphereSceneProps> = ({ scenePhase, onPhaseChan
 
 export const CagedSphereScene: React.FC<CagedSphereSceneProps> = (props) => {
   return (
-    <div className="w-full h-full relative bg-[#FDFCF5]">
+    <div className="w-full h-full relative">
       <Canvas camera={{ position: [0, 0, 6] }}>
-        <color attach="background" args={['#FDFCF5']} />
+        {/* Background removed for transparent gradient */}
         <CagedContent {...props} />
       </Canvas>
 
@@ -125,8 +125,8 @@ const TranslatedStatus: React.FC = () => {
   return (
     <div className="absolute bottom-20 w-full text-center pointer-events-none">
       <div className="inline-block px-6 py-4 rounded-full bg-white/40 border border-white shadow-sm backdrop-blur">
-        <p className="text-gallery-charcoal/50 text-[10px] font-bold tracking-widest uppercase mb-1">{t('caged.status')}</p>
-        <p className="text-gallery-charcoal text-sm font-medium">{t('caged.instruction')}</p>
+        <p className="text-neutral-charcoal/50 text-[10px] font-bold tracking-widest uppercase mb-1">{t('caged.status')}</p>
+        <p className="text-neutral-charcoal text-sm font-medium">{t('caged.instruction')}</p>
       </div>
     </div>
   );

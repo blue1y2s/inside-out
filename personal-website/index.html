@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troy | Emotion Visualization Project</title>
-    <meta name="description" content="Exploring the intersection of emotion, color, and personality through an Inside Out-inspired visualization">
+    <meta name="description"
+        content="Exploring the intersection of emotion, color, and personality through an Inside Out-inspired visualization">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Animated Background Spheres -->
     <div class="background-spheres">
@@ -40,7 +45,7 @@
                 Through Color
             </h1>
             <p class="fade-in delay-1">
-                An interactive exploration of personality and emotion, where every memory sphere 
+                An interactive exploration of personality and emotion, where every memory sphere
                 tells a story through the language of color.
             </p>
             <div class="hero-buttons fade-in delay-2">
@@ -56,12 +61,12 @@
             <h2 class="section-title">About This Project</h2>
             <div class="card glass-card">
                 <p class="lead">
-                    What if we could see our personalities as colorful, glowing spheres—each one 
+                    What if we could see our personalities as colorful, glowing spheres—each one
                     representing a different emotion, just like in Pixar's <em>Inside Out</em>?
                 </p>
                 <p>
-                    This project brings that vision to life. By analyzing text and personality dimensions, 
-                    it creates a 3D universe of "memory spheres" where colors aren't just decoration—they're 
+                    This project brings that vision to life. By analyzing text and personality dimensions,
+                    it creates a 3D universe of "memory spheres" where colors aren't just decoration—they're
                     a visual language for understanding ourselves.
                 </p>
                 <div class="emotion-grid">
@@ -99,7 +104,7 @@
                     <div class="detail-icon">🎨</div>
                     <h3>Visual Design</h3>
                     <p>
-                        Extracted color palettes and visual references from <em>Inside Out 2</em> 
+                        Extracted color palettes and visual references from <em>Inside Out 2</em>
                         to create an authentic emotion-color mapping system.
                     </p>
                 </div>
@@ -107,7 +112,7 @@
                     <div class="detail-icon">🧠</div>
                     <h3>Personality Analysis</h3>
                     <p>
-                        Maps personality dimensions (extraversion, emotionality, warmth, etc.) 
+                        Maps personality dimensions (extraversion, emotionality, warmth, etc.)
                         to dominant emotions and their corresponding colors.
                     </p>
                 </div>
@@ -115,7 +120,7 @@
                     <div class="detail-icon">✨</div>
                     <h3>3D Visualization</h3>
                     <p>
-                        Creates an immersive 3D universe where memory spheres float and glow, 
+                        Creates an immersive 3D universe where memory spheres float and glow,
                         each one representing a unique emotional moment.
                     </p>
                 </div>
@@ -141,15 +146,17 @@
             <p class="section-subtitle">
                 Enter your thoughts and watch them transform into a colorful emotional universe
             </p>
-            
+
             <div class="demo-container glass-card">
-                <div class="demo-placeholder">
-                    <div class="demo-icon">🌟</div>
-                    <h3>Interactive Demo</h3>
-                    <p>The full 3D experience will be embedded here</p>
-                    <a href="../app/index.html" target="_blank" class="btn primary-btn">
-                        Launch Full Demo →
-                    </a>
+                <div class="demo-placeholder" style="padding: 0; overflow: hidden; background: transparent;">
+                    <iframe src="../visualization/index.html"
+                        style="width: 100%; height: 500px; border: none; border-radius: 20px;"
+                        title="Emotion Visualization Demo"></iframe>
+                    <div style="padding: 20px; text-align: center;">
+                        <a href="../visualization/index.html" target="_blank" class="btn primary-btn">
+                            Launch Full Screen Experience →
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,4 +182,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

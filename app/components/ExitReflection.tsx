@@ -28,27 +28,27 @@ export const ExitReflection: React.FC<ExitReflectionProps> = ({ isOpen, onClose 
   };
 
   return (
-    <div 
+    <div
       className={`fixed inset-0 z-50 flex items-center justify-center transition-all duration-500 ${isOpen ? 'opacity-100 backdrop-blur-sm' : 'opacity-0 pointer-events-none'}`}
     >
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-[#FDFCF5]/60 transition-opacity" 
+      <div
+        className="absolute inset-0 bg-[#FDFCF5]/60 transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div 
+      <div
         className={`glass-panel w-[90%] max-w-lg p-10 rounded-3xl shadow-2xl bg-white/60 relative transform transition-all duration-500 ${isOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}
       >
-        <button 
+        <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-gallery-charcoal/30 hover:text-gallery-charcoal transition-colors p-2"
+          className="absolute top-6 right-6 text-neutral-charcoal/30 hover:text-neutral-charcoal transition-colors p-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
 
-        <h3 className="text-3xl md:text-4xl font-serif text-gallery-charcoal mb-8 leading-tight">
+        <h3 className="text-3xl md:text-4xl font-serif text-neutral-charcoal mb-8 leading-tight">
           Before you return to the world, how did this reflection sit with you?
         </h3>
 
@@ -56,13 +56,13 @@ export const ExitReflection: React.FC<ExitReflectionProps> = ({ isOpen, onClose 
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="I felt..."
-          className="w-full h-40 bg-white/50 rounded-2xl p-6 text-gallery-charcoal font-sans text-lg placeholder-gallery-charcoal/30 resize-none focus:outline-none focus:ring-1 focus:ring-gallery-lime/50 transition-all mb-8 shadow-inner"
+          className="w-full h-40 bg-white/50 rounded-2xl p-6 text-neutral-charcoal font-sans text-lg placeholder-neutral-charcoal/30 resize-none focus:outline-none focus:ring-1 focus:ring-emotion-joy/50 transition-all mb-8 shadow-inner"
         />
 
         <div className="flex justify-end">
           <button
             onClick={handleRelease}
-            className="px-8 py-4 bg-gallery-lime rounded-full text-gallery-charcoal font-serif font-bold text-lg hover:bg-gallery-yellow hover:scale-105 transition-all shadow-xl shadow-gallery-lime/20 tracking-wide"
+            className="px-8 py-4 bg-emotion-joy rounded-full text-neutral-charcoal font-serif font-bold text-lg hover:bg-emotion-joy/80 hover:scale-105 transition-all shadow-xl shadow-emotion-joy/20 tracking-wide"
           >
             Release
           </button>
