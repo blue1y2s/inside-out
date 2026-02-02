@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troy | Emotion Visualization Project</title>
+    <meta name="description" content="Exploring the intersection of emotion, color, and personality through an Inside Out-inspired visualization">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background Spheres -->
+    <div class="background-spheres">
+        <div class="sphere sphere-joy"></div>
+        <div class="sphere sphere-sadness"></div>
+        <div class="sphere sphere-anxiety"></div>
+        <div class="sphere sphere-envy"></div>
+        <div class="sphere sphere-embarrassment"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="logo">Troy.</div>
+        <div class="links">
+            <a href="#about">About</a>
+            <a href="#project">Project</a>
+            <a href="#demo">Demo</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="emotion-badge">✨ Inspired by Inside Out</div>
+            <h1 class="fade-in">
+                Visualizing <span class="gradient-text">Emotions</span><br>
+                Through Color
+            </h1>
+            <p class="fade-in delay-1">
+                An interactive exploration of personality and emotion, where every memory sphere 
+                tells a story through the language of color.
+            </p>
+            <div class="hero-buttons fade-in delay-2">
+                <a href="#demo" class="btn primary-btn">Experience Demo</a>
+                <a href="#project" class="btn secondary-btn">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About This Project</h2>
+            <div class="card glass-card">
+                <p class="lead">
+                    What if we could see our personalities as colorful, glowing spheres—each one 
+                    representing a different emotion, just like in Pixar's <em>Inside Out</em>?
+                </p>
+                <p>
+                    This project brings that vision to life. By analyzing text and personality dimensions, 
+                    it creates a 3D universe of "memory spheres" where colors aren't just decoration—they're 
+                    a visual language for understanding ourselves.
+                </p>
+                <div class="emotion-grid">
+                    <div class="emotion-item">
+                        <div class="emotion-color" style="background: #FFD700; box-shadow: 0 0 20px #FFD70060;"></div>
+                        <span>Joy</span>
+                    </div>
+                    <div class="emotion-item">
+                        <div class="emotion-color" style="background: #4A90E2; box-shadow: 0 0 20px #4A90E260;"></div>
+                        <span>Sadness</span>
+                    </div>
+                    <div class="emotion-item">
+                        <div class="emotion-color" style="background: #FF6B35; box-shadow: 0 0 20px #FF6B3560;"></div>
+                        <span>Anxiety</span>
+                    </div>
+                    <div class="emotion-item">
+                        <div class="emotion-color" style="background: #00D9B5; box-shadow: 0 0 20px #00D9B560;"></div>
+                        <span>Envy</span>
+                    </div>
+                    <div class="emotion-item">
+                        <div class="emotion-color" style="background: #FF9ECD; box-shadow: 0 0 20px #FF9ECD60;"></div>
+                        <span>Embarrassment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details Section -->
+    <section id="project" class="section">
+        <div class="container">
+            <h2 class="section-title">The Vision</h2>
+            <div class="project-details">
+                <div class="detail-card glass-card">
+                    <div class="detail-icon">🎨</div>
+                    <h3>Visual Design</h3>
+                    <p>
+                        Extracted color palettes and visual references from <em>Inside Out 2</em> 
+                        to create an authentic emotion-color mapping system.
+                    </p>
+                </div>
+                <div class="detail-card glass-card">
+                    <div class="detail-icon">🧠</div>
+                    <h3>Personality Analysis</h3>
+                    <p>
+                        Maps personality dimensions (extraversion, emotionality, warmth, etc.) 
+                        to dominant emotions and their corresponding colors.
+                    </p>
+                </div>
+                <div class="detail-card glass-card">
+                    <div class="detail-icon">✨</div>
+                    <h3>3D Visualization</h3>
+                    <p>
+                        Creates an immersive 3D universe where memory spheres float and glow, 
+                        each one representing a unique emotional moment.
+                    </p>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h3>Built With</h3>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">Vite</span>
+                    <span class="tag">Inside Out Palette</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="section demo-section">
+        <div class="container">
+            <h2 class="section-title">Experience It Yourself</h2>
+            <p class="section-subtitle">
+                Enter your thoughts and watch them transform into a colorful emotional universe
+            </p>
+            
+            <div class="demo-container glass-card">
+                <div class="demo-placeholder">
+                    <div class="demo-icon">🌟</div>
+                    <h3>Interactive Demo</h3>
+                    <p>The full 3D experience will be embedded here</p>
+                    <a href="../app/index.html" target="_blank" class="btn primary-btn">
+                        Launch Full Demo →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="card glass-card contact-card">
+                <h2>Let's Connect</h2>
+                <p>Interested in collaboration or just want to chat about emotion visualization?</p>
+                <div class="contact-links">
+                    <a href="mailto:hello@troy.dev" class="btn secondary-btn">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Troy. Inspired by Pixar's Inside Out.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
