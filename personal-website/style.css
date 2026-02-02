@@ -14,7 +14,7 @@
     --embarrassment: #FF9ECD;
     --anger: #E63946;
     --fear: #9B59B6;
-    
+
     /* Neutral Colors */
     --charcoal: #2C2C2C;
     --soft-white: #FDFCF5;
@@ -100,15 +100,20 @@ body {
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(0, 0) scale(1);
     }
+
     25% {
         transform: translate(30px, -30px) scale(1.1);
     }
+
     50% {
         transform: translate(-20px, 20px) scale(0.9);
     }
+
     75% {
         transform: translate(20px, 30px) scale(1.05);
     }
@@ -198,10 +203,13 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
     }
+
     50% {
         transform: scale(1.05);
         box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0);
@@ -226,8 +234,15 @@ body {
 }
 
 @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .hero p {
@@ -257,12 +272,17 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    cursor: pointer;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+    /* Fix for retina rendering */
 }
 
 .primary-btn {
     background: linear-gradient(135deg, var(--joy), var(--anxiety));
     color: white;
-    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    color: white;
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
 }
 
 .primary-btn:hover {
@@ -273,8 +293,10 @@ body {
 .secondary-btn {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: var(--charcoal);
     border: 2px solid var(--glass-border);
+    background-clip: padding-box;
 }
 
 .secondary-btn:hover {
@@ -440,8 +462,15 @@ body {
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 .demo-placeholder h3 {
@@ -512,6 +541,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -537,42 +567,42 @@ em {
     .glass-nav {
         padding: 1rem 1.5rem;
     }
-    
+
     .links {
         gap: 1rem;
     }
-    
+
     .hero {
         padding: 1rem;
     }
-    
+
     .section {
         padding: 4rem 1rem;
     }
-    
+
     .glass-card {
         padding: 2rem;
     }
-    
+
     .emotion-grid {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 1rem;
     }
-    
+
     .emotion-color {
         width: 50px;
         height: 50px;
     }
-    
+
     .project-details {
         grid-template-columns: 1fr;
     }
-    
+
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .btn {
         width: 100%;
         max-width: 300px;
