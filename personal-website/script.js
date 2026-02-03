@@ -116,6 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Log page load
-    console.log('🎨 Inside Out Emotion Visualization Project');
+    console.log('🎨 Emotion Visualization Project');
     console.log('✨ Powered by color, emotion, and personality');
 });

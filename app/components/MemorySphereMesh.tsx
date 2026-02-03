@@ -10,7 +10,7 @@ interface MemorySphereMeshProps {
 }
 
 /**
- * MemorySphereMesh: A high-fidelity memory orb inspired by Inside Out.
+ * MemorySphereMesh: A high-fidelity memory orb with emotion-based coloring.
  * Uses a glassy outer shell and a distorted, glowing inner core to simulate 
  * flowing "memory energy".
  */

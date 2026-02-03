@@ -1,7 +1,7 @@
 import { PostCategory } from '../types';
 
 /**
- * Inside Out Emotion-Based Color System
+ * Emotion-Based Color System
  * Maps post categories and sentiment to emotion colors from the movie
  */
 
@@ -17,7 +17,7 @@ const EMOTION_COLORS = {
 };
 
 export function getSphereColor(sentimentScore: number, category?: PostCategory): string {
-  // Category-based emotion mapping (Inside Out style)
+  // Category-based emotion mapping (emotional color palette)
 
   // "Rant" → Anxiety (nervous energy, tension)
   if (category === 'rant') return EMOTION_COLORS.anxiety;

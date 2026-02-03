@@ -49,8 +49,8 @@ export function EmotionLegend({ isVisible = true }: EmotionLegendProps) {
             </div>
             <p className="text-[10px] text-gallery-charcoal/60 mt-3 italic">
                 {language === 'en'
-                    ? 'Inspired by Inside Out'
-                    : '灵感来自《头脑特工队》'}
+                    ? 'Emotion-driven color visualization'
+                    : '情绪驱动的色彩可视化'}
             </p>
         </div>
     );

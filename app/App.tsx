@@ -24,14 +24,20 @@ function AppContent() {
   const [spheres, setSpheres] = useState<MemorySphere[]>([]);
   const [currentDimensions, setCurrentDimensions] = useState<PersonaDimensions | null>(null);
 
-  // Initialize from storage
+  // Initialize from storage (unless in demo mode)
   React.useEffect(() => {
-    const stored = loadMemories();
-    if (stored.length > 0) {
-      setAnalyzedPosts(stored);
-      setSpheres(layoutMemorySpheres(stored));
-      setCurrentDimensions(computePersonaDimensions(stored));
-      setScenePhase('universe'); // Go straight to universe if we have memories
+    // Check if we are in demo mode
+    const params = new URLSearchParams(window.location.search);
+    const isDemo = params.get('mode') === 'demo';
+
+    if (!isDemo) {
+      const stored = loadMemories();
+      if (stored.length > 0) {
+        setAnalyzedPosts(stored);
+        setSpheres(layoutMemorySpheres(stored));
+        setCurrentDimensions(computePersonaDimensions(stored));
+        setScenePhase('universe'); // Go straight to universe if we have memories
+      }
     }
   }, []);
 

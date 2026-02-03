@@ -17,7 +17,7 @@ export interface MemorySphere {
   timelinePosition: [number, number, number];
   humanoidPosition: [number, number, number];
   castlePosition: [number, number, number];
-  // Mixed emotion support (Inside Out style)
+  // Mixed emotion support (multi-layered emotional expression)
   hasMixedEmotions?: boolean;
   secondaryColor?: string;
   emotionWeights?: Array<{ emotion: string; weight: number; color: string }>;

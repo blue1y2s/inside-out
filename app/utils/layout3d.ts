@@ -91,7 +91,7 @@ export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
     const color = getSphereColor(post.sentimentScore, post.category);
 
     // --- Sense of Self (Identity) Layout ---
-    // Inspired by Inside Out 2: Core beliefs at the bottom feed into the "Self" flower/crown at top
+    // Core beliefs at the bottom feed into the "Self" flower/crown at top
 
     // Core Memories: High intensity or specific categories
     const isCore = post.intensity >= 4 || post.category === 'relationship';
@@ -124,7 +124,7 @@ export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
       ];
     }
 
-    // --- Mixed Emotion Detection (Inside Out style) ---
+    // --- Mixed Emotion Detection (multi-layered emotions) ---
     // Detect if this memory contains complex, mixed emotions
     const text = post.originalText.toLowerCase();
     const sentiment = post.sentimentScore;
@@ -144,7 +144,7 @@ export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
     let secondaryColor: string | undefined;
 
     if (hasMixedEmotions) {
-      // Mixed emotion color pairs (based on Inside Out emotional combinations)
+      // Mixed emotion color pairs (based on emotional combinations)
       if (sentiment > 0 && intensity > 3) {
         // Joy + Anxiety = Excitement/Nervousness
         secondaryColor = '#FF6B35'; // Anxiety

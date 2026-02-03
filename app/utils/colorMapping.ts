@@ -16,7 +16,7 @@ export interface MixedEmotion {
 }
 
 /**
- * Maps personality dimensions to Inside Out emotion colors
+ * Maps personality dimensions to emotional color spectrum
  */
 export function getEmotionFromDimensions(dimensions: PersonaDimensions): EmotionColor {
     const { extraversion, emotionality, warmth, conscientiousness, confidence } = dimensions;
@@ -49,7 +49,7 @@ export function getEmotionFromDimensions(dimensions: PersonaDimensions): Emotion
 }
 
 /**
- * Get mixed emotions from post - Inside Out style where memories can have multiple emotions
+ * Get mixed emotions from post - multi-layered emotional representation
  */
 export function getMixedEmotionsFromPost(sentiment: number, intensity: number, text: string): MixedEmotion {
     const emotions: Array<{ name: string; weight: number; color: string }> = [];
