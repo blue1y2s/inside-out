@@ -1,16 +1,16 @@
-# Inside Out Emotion Visualization Project
+# SeeYourself
 
-> 🎨 Exploring the intersection of emotion, color, and personality through an Inside Out-inspired visualization
+> 🎨 Discover and visualize your inner emotional world
 
 ## 项目概述
 
-这个项目受 Pixar 电影《Inside Out (头脑特工队)》启发，将情绪可视化为彩色的记忆球体。通过分析文本和人格维度，创建一个 3D 宇宙，其中每个球体都代表一个独特的情感时刻。
+SeeYourself 是一个情绪可视化项目，将你的内心世界转化为彩色的记忆球体。通过分析文本和人格维度，创建一个 3D 宇宙，其中每个球体都代表一个独特的情感时刻。
 
 ## 核心特性
 
 ### 🎨 情绪-颜色映射系统
 
-基于 Inside Out 2 的视觉设计，我们创建了一套完整的情绪-颜色映射：
+我们创建了一套完整的情绪-颜色映射：
 
 - **Joy (快乐)** - `#FFD700` - 金黄色，代表成就和积极时刻
 - **Sadness (悲伤)** - `#4A90E2` - 深蓝色，代表反思和忧郁
@@ -45,35 +45,30 @@
 - **3D Graphics**: Three.js
 - **Build Tool**: Vite
 - **Styling**: Vanilla CSS with Glassmorphism
-- **Color System**: Inside Out Emotion Palette
+- **Color System**: Emotional Palette
 
 ## 项目结构
 
 ```
-personal_visual/
+seeyourself/
 ├── app/                          # 主应用 (React + Three.js)
 │   ├── components/               # React 组件
 │   │   ├── SceneOrchestrator.tsx # 3D 场景管理
 │   │   ├── EmotionLegend.tsx    # 情绪图例
 │   │   └── ...
 │   ├── utils/
-│   │   ├── colorMap.ts          # Inside Out 颜色映射
+│   │   ├── colorMap.ts          # 颜色映射
 │   │   ├── colorMapping.ts      # 人格-情绪映射
 │   │   └── layout3d.ts          # 3D 布局算法
 │   └── types.ts                 # TypeScript 类型定义
 │
 ├── personal-website/            # 个人展示网站
 │   ├── index.html              # 主页
-│   ├── style.css               # Inside Out 主题样式
+│   ├── style.css               # 主题样式
 │   └── script.js               # 交互效果
 │
-├── reference/                   # 视觉参考资料
-│   ├── color_palette.json      # 情绪颜色配置
-│   ├── movie/                  # Inside Out 2 电影文件
-│   └── extracted/              # 提取的视觉素材 (待生成)
-│
-└── scripts/
-    └── extract_visuals.sh      # FFmpeg 视觉提取脚本
+└── reference/                   # 视觉参考资料
+    └── color_palette.json      # 情绪颜色配置
 ```
 
 ## 快速开始
@@ -101,7 +96,7 @@ python3 -m http.server 8000
 
 ### 视觉设计
 
-项目的视觉设计完全基于 Inside Out 的情绪色彩系统。每种颜色都不仅仅是装饰，而是一种理解自我的视觉语言。
+项目的视觉设计基于情绪色彩系统。每种颜色都不仅仅是装饰，而是一种理解自我的视觉语言。
 
 ### 交互设计
 
@@ -118,7 +113,6 @@ python3 -m http.server 8000
 
 ## 未来计划
 
-- [ ] 使用 FFmpeg 从 Inside Out 2 提取更多视觉参考
 - [ ] 添加更多情绪混合效果
 - [ ] 实现情绪历程的数据可视化图表
 - [ ] 支持导出个人情绪报告
@@ -126,7 +120,6 @@ python3 -m http.server 8000
 
 ## 致谢
 
-- **Pixar's Inside Out** - 视觉灵感来源
 - **Three.js** - 强大的 3D 图形库
 - **React** - 优秀的 UI 框架
 
@@ -136,4 +129,4 @@ MIT License - 个人项目，仅供学习和展示使用
 
 ---
 
-**Made with 💛💙🧡💚💗 by Troy**
+**Made with 💛💙🧡💚💗 by Ayang**
