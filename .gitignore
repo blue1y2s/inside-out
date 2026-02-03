@@ -8,10 +8,15 @@ dist/
 build/
 .vite/
 
-# Environment
+# Environment - NEVER commit these!
 .env
 .env.local
+.env.*.local
 config.env
+config*.env
+*.key
+*.pem
+secrets/
 
 # OS
 .DS_Store
@@ -33,3 +38,4 @@ reference/movie/
 *.tmp
 .cache/
 Second-Me-1.0.1/
+temp_inside_out/

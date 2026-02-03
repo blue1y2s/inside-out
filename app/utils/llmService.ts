@@ -1,7 +1,9 @@
 
 import { AnalyzedPost, PostCategory } from '../types';
 
-const API_KEY = "REDACTED_API_KEY";
+// IMPORTANT: API key should be set via environment variable
+// For Vite: VITE_OPENAI_API_KEY in .env.local (not committed to git)
+const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
 
 interface LLMAnalysisResult {
     sentimentScore: number;
