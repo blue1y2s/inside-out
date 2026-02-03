@@ -28,11 +28,11 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
   const humanoidVec = useMemo(() => new Vector3(...data.humanoidPosition), [data.humanoidPosition]);
   const castleVec = useMemo(() => new Vector3(...(data.castlePosition || data.timelinePosition)), [data.castlePosition, data.timelinePosition]);
 
-  // Saturated colors
-  const primaryColor = useMemo(() => new Color(data.color).multiplyScalar(1.5), [data.color]);
+  // Vibrant colors for the core
+  const primaryColor = useMemo(() => new Color(data.color), [data.color]);
   const secondaryColor = useMemo(() => {
     if (data.hasMixedEmotions && data.secondaryColor) {
-      return new Color(data.secondaryColor).multiplyScalar(1.5);
+      return new Color(data.secondaryColor);
     }
     return null;
   }, [data.secondaryColor, data.hasMixedEmotions]);
