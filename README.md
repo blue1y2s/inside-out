@@ -22,10 +22,13 @@ A web-based emotion visualization tool that transforms text into a beautiful uni
 ```bash
 cd app
 npm install
+npm run dev:server
 npm run dev
 ```
 
 Visit `http://localhost:3000`
+
+Optional: set `OPENAI_API_KEY` in `app/.env.local` to enable LLM analysis (otherwise it falls back to local rules).
 
 ### Personal Website
 

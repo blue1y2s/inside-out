@@ -10,11 +10,13 @@ View your app in AI Studio: https://ai.studio/apps/temp/1
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js 18+
 
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Set `OPENAI_API_KEY` in `.env.local` (optional; app falls back to rule-based analysis)
+3. Start the proxy server:
+   `npm run dev:server`
+4. Run the app:
    `npm run dev`

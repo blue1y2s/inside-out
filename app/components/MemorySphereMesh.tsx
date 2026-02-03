@@ -86,42 +86,38 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
   return (
     <group>
       {/* 
-          1. INNER CORE(S): Using MeshDistortMaterial for flowing energy.
-          We use two if mixed emotions to create overlapping, churning patterns.
+          1. INNER CORE(S): Larger and more solid to provide the base "filling" color.
       */}
       <mesh ref={primaryCoreRef} position={data.timelinePosition}>
-        <sphereGeometry args={[data.radius * 0.9, 32, 32]} />
+        <sphereGeometry args={[data.radius * 0.8, 32, 32]} />
         <MeshDistortMaterial
           color={primaryColor}
           emissive={primaryColor}
-          emissiveIntensity={emissiveIntensity}
-          distort={0.4}
-          speed={3}
-          roughness={0.05}
-          metalness={0.3}
-          radius={data.radius * 0.9}
+          emissiveIntensity={0.8} // Reduced slightly as the shell will now be colored
+          distort={0.3} // Less distortion for a more solid feel
+          speed={2}
+          roughness={0.4}
         />
       </mesh>
 
       {secondaryColor && (
         <mesh ref={secondaryCoreRef} position={data.timelinePosition}>
-          <sphereGeometry args={[data.radius * 0.85, 32, 32]} />
+          <sphereGeometry args={[data.radius * 0.75, 32, 32]} />
           <MeshDistortMaterial
             color={secondaryColor}
             emissive={secondaryColor}
-            emissiveIntensity={emissiveIntensity * 0.8}
-            distort={0.5}
-            speed={4}
+            emissiveIntensity={0.6}
+            distort={0.4}
+            speed={2}
             transparent
-            opacity={0.7}
-            roughness={0.05}
+            opacity={0.8}
           />
         </mesh>
       )}
 
       {/* 
-          2. OUTER SHELL: The glassy container.
-          Reduced opacity to let colors shine through more vibrantly.
+          2. OUTER SHELL: Now tinted with the emotion color and less transparent
+          to creates a "milky marble" or "frosted glass" look.
       */}
       <mesh
         ref={outerShellRef}
@@ -133,17 +129,18 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
       >
         <sphereGeometry args={[data.radius, 64, 64]} />
         <meshPhysicalMaterial
-          color="#ffffff"
+          color={primaryColor} // Tint the shell with the emotion color
           transparent
-          opacity={0.15}
-          transmission={0.5}
-          thickness={1.5}
-          roughness={0}
-          metalness={0}
-          clearcoat={1.0}
-          clearcoatRoughness={0.05}
-          ior={1.6}
-          reflectivity={1.0}
+          opacity={0.9} // High opacity for solid look
+          transmission={0.4} // Low transmission: light only partially passes through
+          roughness={0.2} // Smooth but not mirror-perfect
+          metalness={0.1}
+          clearcoat={1.0} // Still keep the premium glass coating
+          clearcoatRoughness={0.1}
+          ior={1.5}
+          thickness={data.radius * 2} // Simulated thickness
+          attenuationColor={primaryColor} // Inner light scattering color
+          attenuationDistance={data.radius}
         />
 
         {hovered && (

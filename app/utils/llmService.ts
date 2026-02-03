@@ -1,9 +1,8 @@
 
 import { AnalyzedPost, PostCategory } from '../types';
 
-// IMPORTANT: API key should be set via environment variable
-// For Vite: VITE_OPENAI_API_KEY in .env.local (not committed to git)
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
+// IMPORTANT: API key is stored on the server. The client only calls the local proxy.
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
 
 interface LLMAnalysisResult {
     sentimentScore: number;
@@ -48,11 +47,14 @@ export async function analyzePostsWithLLM(posts: string[]): Promise<AnalyzedPost
     const startTime = Date.now();
 
     try {
-        const response = await fetch('/api/proxy/chat/completions', {
+        const endpoint = API_BASE_URL
+            ? `${API_BASE_URL}/api/llm/chat/completions`
+            : '/api/llm/chat/completions';
+
+        const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 model: "gpt-4o", // Or "gpt-3.5-turbo" if 4o is not available on this relay
