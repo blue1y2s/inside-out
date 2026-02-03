@@ -2,78 +2,54 @@
 
 > 🎨 Discover and visualize your inner emotional world
 
-## 项目概述
+A web-based emotion visualization tool that transforms your thoughts and feelings into a beautiful 3D universe of colored memory spheres.
 
-SeeYourself 是一个情绪可视化项目，将你的内心世界转化为彩色的记忆球体。通过分析文本和人格维度，创建一个 3D 宇宙，其中每个球体都代表一个独特的情感时刻。
+## ✨ Features
 
-## 核心特性
+### 🎨 Emotion-Color Mapping System
 
-### 🎨 情绪-颜色映射系统
+Each emotion is represented by a unique color:
 
-我们创建了一套完整的情绪-颜色映射：
+- **Joy** - `#FFD700` - Golden yellow for achievements and positive moments
+- **Sadness** - `#4A90E2` - Deep blue for reflection and melancholy
+- **Anxiety** - `#FF6B35` - Vibrant orange for tension and worry
+- **Envy** - `#00D9B5` - Cyan-green for comparison and desire
+- **Embarrassment** - `#FF9ECD` - Soft pink for vulnerability and shyness
+- **Anger** - `#E63946` - Intense red for strong negative emotions
+- **Fear** - `#9B59B6` - Purple for uncertainty and caution
 
-- **Joy (快乐)** - `#FFD700` - 金黄色，代表成就和积极时刻
-- **Sadness (悲伤)** - `#4A90E2` - 深蓝色，代表反思和忧郁
-- **Anxiety (焦虑)** - `#FF6B35` - 活力橙，代表紧张和高强度担忧
-- **Envy (嫉妒)** - `#00D9B5` - 青绿色，代表比较和渴望
-- **Embarrassment (尴尬)** - `#FF9ECD` - 柔粉色，代表脆弱和害羞
-- **Anger (愤怒)** - `#E63946` - 强烈红，代表强烈负面情绪
-- **Fear (恐惧)** - `#9B59B6` - 紫色，代表不确定和谨慎
+### 🧠 Personality Analysis
 
-### 🧠 人格分析
+The app maps personality dimensions to dominant emotions:
 
-应用将人格维度映射到主导情绪：
+- **Extraversion** - Influences Joy/Sadness expression
+- **Emotionality** - Determines Anxiety/Fear intensity
+- **Warmth** - Affects Joy/Embarrassment balance
+- **Conscientiousness** - Related to Anxiety
+- **Confidence** - Influences Fear/Embarrassment
 
-- **Extraversion (外向性)** - 影响 Joy/Sadness 的表现
-- **Emotionality (情绪性)** - 决定 Anxiety/Fear 的强度
-- **Warmth (温暖度)** - 影响 Joy/Embarrassment 的平衡
-- **Conscientiousness (尽责性)** - 与 Anxiety 相关
-- **Confidence (自信度)** - 影响 Fear/Embarrassment
+### ✨ 3D Visualization Modes
 
-### ✨ 3D 可视化
+Experience your emotions in three different layouts:
 
-使用 Three.js 创建沉浸式 3D 体验：
+1. **Timeline View** - Memories arranged in a spiral, showing your emotional journey over time
+2. **Humanoid View** - Memories distributed across a human form (head for thoughts, heart for feelings, limbs for actions)
+3. **Sense of Self** - Core memories at the base feed into your "Self" structure at the top, connected by glowing belief strands
 
-- 发光的记忆球体，每个都有独特的颜色
-- 基于情绪的动态颜色过渡
-- 人形布局（头部、心脏、四肢）对应不同类型的记忆
-- 时间轴视图展示情感历程
+### 💾 Memory System
 
-## 技术栈
+- **Persistent Storage** - Your memories are saved locally and persist across sessions
+- **Memory Bank** - View and manage all your stored memories
+- **Delete Function** - Remove individual memories you want to forget
 
-- **Frontend**: React + TypeScript
-- **3D Graphics**: Three.js
-- **Build Tool**: Vite
-- **Styling**: Vanilla CSS with Glassmorphism
-- **Color System**: Emotional Palette
+## 🚀 Quick Start
 
-## 项目结构
+### Prerequisites
 
-```
-seeyourself/
-├── app/                          # 主应用 (React + Three.js)
-│   ├── components/               # React 组件
-│   │   ├── SceneOrchestrator.tsx # 3D 场景管理
-│   │   ├── EmotionLegend.tsx    # 情绪图例
-│   │   └── ...
-│   ├── utils/
-│   │   ├── colorMap.ts          # 颜色映射
-│   │   ├── colorMapping.ts      # 人格-情绪映射
-│   │   └── layout3d.ts          # 3D 布局算法
-│   └── types.ts                 # TypeScript 类型定义
-│
-├── personal-website/            # 个人展示网站
-│   ├── index.html              # 主页
-│   ├── style.css               # 主题样式
-│   └── script.js               # 交互效果
-│
-└── reference/                   # 视觉参考资料
-    └── color_palette.json      # 情绪颜色配置
-```
+- Node.js 16+ and npm
+- Modern web browser with WebGL support
 
-## 快速开始
-
-### 运行主应用
+### Running the Main App
 
 ```bash
 cd app
@@ -81,51 +57,110 @@ npm install
 npm run dev
 ```
 
-访问 <http://localhost:3000>
+Visit `http://localhost:3000`
 
-### 运行个人网站
+### Running the Personal Website
 
 ```bash
 cd personal-website
 python3 -m http.server 8000
 ```
 
-访问 <http://localhost:8000>
+Visit `http://localhost:8000`
 
-## 设计理念
+## 📁 Project Structure
 
-### 视觉设计
+```
+seeyourself/
+├── app/                          # Main application (React + Three.js)
+│   ├── components/               # React components
+│   │   ├── SceneOrchestrator.tsx # 3D scene management
+│   │   ├── PersonaUniverse.tsx   # 3D visualization modes
+│   │   ├── MemoryBankPanel.tsx   # Memory management UI
+│   │   ├── BeliefStrands.tsx     # Sense of Self connections
+│   │   └── ...
+│   ├── utils/
+│   │   ├── colorMap.ts           # Color mapping logic
+│   │   ├── layout3d.ts           # 3D layout algorithms
+│   │   └── memoryStorage.ts      # LocalStorage persistence
+│   └── types.ts                  # TypeScript type definitions
+│
+├── personal-website/             # Landing page
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+└── reference/                    # Visual references
+    └── color_palette.json        # Emotion color configuration
+```
 
-项目的视觉设计基于情绪色彩系统。每种颜色都不仅仅是装饰，而是一种理解自我的视觉语言。
+## 🛠️ Tech Stack
 
-### 交互设计
+- **Frontend**: React + TypeScript
+- **3D Graphics**: Three.js + React Three Fiber
+- **Build Tool**: Vite
+- **Styling**: Vanilla CSS with Glassmorphism
+- **State Management**: React Hooks
+- **Storage**: Browser LocalStorage
 
-- **渐进式体验**: 从输入 → 分析 → 3D 宇宙的流畅过渡
-- **情绪图例**: 帮助用户理解颜色-情绪的对应关系
-- **多视角**: 提供时间轴和人形两种布局视角
+## 🎨 Design Philosophy
 
-### 技术实现
+### Visual Design
 
-1. **颜色映射**: 基于文本情感分析和人格维度计算
-2. **3D 渲染**: 使用 Three.js 实现高性能球体渲染
-3. **动画系统**: 平滑的场景转换和球体动画
-4. **响应式设计**: 适配桌面和移动设备
+The project uses a carefully crafted emotion-color system where each color is not just decoration, but a visual language for understanding yourself.
 
-## 未来计划
+### Interaction Design
 
-- [ ] 添加更多情绪混合效果
-- [ ] 实现情绪历程的数据可视化图表
-- [ ] 支持导出个人情绪报告
-- [ ] 添加多语言支持（中文/英文）
+- **Progressive Experience**: Smooth transitions from input → analysis → 3D universe
+- **Emotion Legend**: Helps users understand color-emotion mappings
+- **Multiple Perspectives**: Timeline, Humanoid, and Sense of Self views
+- **Persistent Memories**: Your emotional journey is saved and grows over time
 
-## 致谢
+### Technical Implementation
 
-- **Three.js** - 强大的 3D 图形库
-- **React** - 优秀的 UI 框架
+1. **Color Mapping**: Based on text sentiment analysis and personality dimensions
+2. **3D Rendering**: High-performance sphere rendering with Three.js
+3. **Animation System**: Smooth scene transitions and sphere animations
+4. **Responsive Design**: Adapts to desktop and mobile devices
+5. **Memory Persistence**: Automatic save/load with localStorage
 
-## License
+## 🚢 Deployment
 
-MIT License - 个人项目，仅供学习和展示使用
+### Build for Production
+
+```bash
+cd app
+npm run build
+```
+
+The built files will be in `app/dist/`.
+
+### Deploy to GitHub Pages
+
+1. Update `vite.config.ts` with your repository base path
+2. Build the project
+3. Push the `dist` folder to your `gh-pages` branch
+
+See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed instructions.
+
+## 🗺️ Roadmap
+
+- [ ] Add more emotion blending effects
+- [ ] Implement emotion journey data visualization charts
+- [ ] Support exporting personal emotion reports
+- [ ] Add multi-language support (Chinese/English)
+- [ ] Voice input for memories
+- [ ] Social sharing features
+
+## 🙏 Acknowledgments
+
+- **Three.js** - Powerful 3D graphics library
+- **React** - Excellent UI framework
+- **React Three Fiber** - React renderer for Three.js
+
+## 📄 License
+
+MIT License - Personal project for learning and demonstration purposes
 
 ---
 

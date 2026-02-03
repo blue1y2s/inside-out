@@ -29,7 +29,7 @@ function randomPointOnLine(start: Vector3, end: Vector3, jitter: number): [numbe
   const px = start.x + (end.x - start.x) * t;
   const py = start.y + (end.y - start.y) * t;
   const pz = start.z + (end.z - start.z) * t;
-
+  
   return [
     px + (Math.random() - 0.5) * jitter,
     py + (Math.random() - 0.5) * jitter,
@@ -39,32 +39,32 @@ function randomPointOnLine(start: Vector3, end: Vector3, jitter: number): [numbe
 
 function getHumanoidPosition(post: AnalyzedPost, index: number): [number, number, number] {
   const { category } = post;
-
+  
   // 1. HEAD (Thinking): Reflection, Daily, or any 'Mind' related tasks
   // Center: (0, 1.6, 0), Radius: 0.25
   if (category === 'reflection' || category === 'daily') {
-    return randomPointInSphere(new Vector3(0, 1.6, 0), 0.25);
+     return randomPointInSphere(new Vector3(0, 1.6, 0), 0.25);
   }
 
   // 2. HEART/TORSO (Feeling): Relationship, Rant, High Emotion
   // Box Volume: Center (0, 1.1, 0), W: 0.45, H: 0.6, D: 0.3
   if (category === 'relationship' || category === 'rant') {
-    return randomPointInBox(new Vector3(0, 1.15, 0), 0.45, 0.6, 0.3);
+     return randomPointInBox(new Vector3(0, 1.15, 0), 0.45, 0.6, 0.3);
   }
 
   // 3. LIMBS (Action): Achievement
   // Arms and Legs
   if (category === 'achievement') {
-    const limbType = index % 4; // Distribute evenly among limbs
-
-    // Left Arm
-    if (limbType === 0) return randomPointOnLine(new Vector3(-0.25, 1.4, 0), new Vector3(-0.7, 0.9, 0.2), 0.15);
-    // Right Arm
-    if (limbType === 1) return randomPointOnLine(new Vector3(0.25, 1.4, 0), new Vector3(0.7, 0.9, 0.2), 0.15);
-    // Left Leg
-    if (limbType === 2) return randomPointOnLine(new Vector3(-0.15, 0.8, 0), new Vector3(-0.2, 0.0, 0), 0.15);
-    // Right Leg
-    if (limbType === 3) return randomPointOnLine(new Vector3(0.15, 0.8, 0), new Vector3(0.2, 0.0, 0), 0.15);
+     const limbType = index % 4; // Distribute evenly among limbs
+     
+     // Left Arm
+     if (limbType === 0) return randomPointOnLine(new Vector3(-0.25, 1.4, 0), new Vector3(-0.7, 0.9, 0.2), 0.15);
+     // Right Arm
+     if (limbType === 1) return randomPointOnLine(new Vector3(0.25, 1.4, 0), new Vector3(0.7, 0.9, 0.2), 0.15);
+     // Left Leg
+     if (limbType === 2) return randomPointOnLine(new Vector3(-0.15, 0.8, 0), new Vector3(-0.2, 0.0, 0), 0.15);
+     // Right Leg
+     if (limbType === 3) return randomPointOnLine(new Vector3(0.15, 0.8, 0), new Vector3(0.2, 0.0, 0), 0.15);
   }
 
   // 4. FALLBACK: Fill the body structure randomly if category is 'other' or undefined
@@ -72,66 +72,30 @@ function getHumanoidPosition(post: AnalyzedPost, index: number): [number, number
   if (fallbackZone < 0.2) return randomPointInSphere(new Vector3(0, 1.6, 0), 0.25); // Head
   if (fallbackZone < 0.6) return randomPointInBox(new Vector3(0, 1.15, 0), 0.45, 0.6, 0.3); // Torso
   // Legs fallback
-  return randomPointOnLine(new Vector3(0, 0.8, 0), new Vector3((Math.random() - 0.5) * 0.5, 0, 0), 0.3);
+  return randomPointOnLine(new Vector3(0, 0.8, 0), new Vector3((Math.random()-0.5)*0.5, 0, 0), 0.3);
 }
 
 export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
   const count = posts.length;
-
+  
   return posts.map((post, i) => {
     // --- Timeline Layout ---
     const tX = (i - count / 2) * 0.6;
     const tY = post.sentimentScore * 3;
-    const tZ = Math.cos(i * 0.2) * 2 - 2;
+    const tZ = Math.cos(i * 0.2) * 2 - 2; 
 
     // --- Humanoid Layout ---
     const humanoidPos = getHumanoidPosition(post, i);
 
     const radius = 0.15 + (post.intensity / 5) * 0.25;
-    const color = getSphereColor(post.sentimentScore, post.category);
-
-    // --- Sense of Self (Identity) Layout ---
-    // Inspired by Inside Out 2: Core beliefs at the bottom feed into the "Self" flower/crown at top
-
-    // Core Memories: High intensity or specific categories
-    const isCore = post.intensity >= 4 || post.category === 'relationship';
-
-    let castlePos: [number, number, number];
-
-    if (isCore) {
-      // Base Pool: Wide circle at the bottom
-      const angle = i * 0.5; // Distribute randomly/evenly
-      const radius = 8 + (Math.random() * 4); // Wide pool
-      castlePos = [
-        Math.cos(angle) * radius,
-        -10 + (Math.random() * 2), // Far bottom
-        Math.sin(angle) * radius
-      ];
-    } else {
-      // The Self: A tight, glowing flower/orb at the top
-      // Use Golden Spiral distribution for a nice organic shape
-      const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-      const y = 1 - (i / (count || 1)) * 2; // -1 to 1
-      const radius = Math.sqrt(1 - y * y);
-      const theta = goldenAngle * i;
-
-      const sphereRadius = 3.5; // Size of the "Self"
-
-      castlePos = [
-        Math.cos(theta) * radius * sphereRadius,
-        6 + (y * sphereRadius), // Floating high up
-        Math.sin(theta) * radius * sphereRadius
-      ];
-    }
 
     return {
       id: post.id,
       post,
       radius,
-      color,
+      color: getSphereColor(post.sentimentScore, post.category),
       timelinePosition: [tX, tY, tZ],
-      humanoidPosition: humanoidPos,
-      castlePosition: castlePos
+      humanoidPosition: humanoidPos
     };
   });
 }

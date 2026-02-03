@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sparkles } from '@react-three/drei';
 import { MemorySphere } from '../types';
 import { MemorySphereMesh } from './MemorySphereMesh';
+import { BeliefStrands } from './BeliefStrands';
 import { clsx } from 'clsx';
 
 interface PersonaUniverseProps {
@@ -48,6 +49,7 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
           {spheres.map(sphere => (
             <MemorySphereMesh key={sphere.id} data={sphere} mode={layoutMode} />
           ))}
+          <BeliefStrands spheres={spheres} visible={layoutMode === 'castle'} />
         </group>
 
         <OrbitControls
@@ -91,13 +93,13 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
           {layoutMode === 'humanoid' && (
             <>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><path d="M12 4v16"></path></svg>
-              <span className="font-serif font-bold text-lg tracking-wide uppercase">Visit Memory Castle</span>
+              <span className="font-serif font-bold text-lg tracking-wide uppercase">Visit Sense of Self</span>
             </>
           )}
           {layoutMode === 'castle' && (
             <>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-rotate-90 transition-transform"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span className="font-serif font-bold text-lg tracking-wide uppercase">Deconstruct</span>
+              <span className="font-serif font-bold text-lg tracking-wide uppercase">Deconstruct Self</span>
             </>
           )}
         </button>
