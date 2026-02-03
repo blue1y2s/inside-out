@@ -57,7 +57,6 @@ export const BeliefStrands: React.FC<BeliefStrandsProps> = ({ spheres, visible }
                     lineWidth={1}
                     opacity={0.4}
                     transparent
-                    vertexColors={false}
                 />
             ))}
             {/* Central Pillar Glow - Glowing Gradient Blue */}
