@@ -93,8 +93,8 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
         <MeshDistortMaterial
           color={primaryColor}
           emissive={primaryColor}
-          emissiveIntensity={0.8} // Reduced slightly as the shell will now be colored
-          distort={0.3} // Less distortion for a more solid feel
+          emissiveIntensity={1.8} // Stronger glow for bloom
+          distort={0.3}
           speed={2}
           roughness={0.4}
         />
@@ -106,7 +106,7 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
           <MeshDistortMaterial
             color={secondaryColor}
             emissive={secondaryColor}
-            emissiveIntensity={0.6}
+            emissiveIntensity={1.4} // Stronger glow for bloom
             distort={0.4}
             speed={2}
             transparent
@@ -129,18 +129,18 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
       >
         <sphereGeometry args={[data.radius, 64, 64]} />
         <meshPhysicalMaterial
-          color={primaryColor} // Tint the shell with the emotion color
+          color={primaryColor}
           transparent
-          opacity={0.9} // High opacity for solid look
-          transmission={0.4} // Low transmission: light only partially passes through
-          roughness={0.2} // Smooth but not mirror-perfect
+          opacity={0.9}
+          transmission={0.4}
+          roughness={0.35} // Frosted glass look
           metalness={0.1}
-          clearcoat={1.0} // Still keep the premium glass coating
+          clearcoat={0.7} // Reduced from 1.0 for less plastic shine
           clearcoatRoughness={0.1}
           ior={1.5}
-          thickness={data.radius * 2} // Simulated thickness
-          attenuationColor={primaryColor} // Inner light scattering color
-          attenuationDistance={data.radius}
+          thickness={data.radius * 2}
+          attenuationColor={primaryColor}
+          attenuationDistance={data.radius * 0.5} // More depth perception
         />
 
         {hovered && (

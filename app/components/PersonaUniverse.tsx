@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sparkles } from '@react-three/drei';
+import { OrbitControls, Sparkles, ContactShadows } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { MemorySphere } from '../types';
 import { MemorySphereMesh } from './MemorySphereMesh';
 import { BeliefStrands } from './BeliefStrands';
@@ -45,7 +46,25 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
           <pointLight position={[0, 1, 1]} intensity={2} color="#FF0055" distance={6} decay={2} />
         )}
 
+        {/* Post-processing: Bloom for inner glow */}
+        <EffectComposer>
+          <Bloom
+            luminanceThreshold={1.2} // Only very bright things glow
+            mipmapBlur
+            intensity={0.6} // Subtle soft glow
+            radius={0.5}
+          />
+        </EffectComposer>
+
         <group position={[0, -1, 0]}>
+          <ContactShadows
+            opacity={0.3}
+            scale={20}
+            blur={2}
+            far={4}
+            resolution={256}
+            color="#000000"
+          />
           {spheres.map(sphere => (
             <MemorySphereMesh key={sphere.id} data={sphere} mode={layoutMode} />
           ))}
