@@ -58,12 +58,12 @@ export const PersonaUniverse: React.FC<PersonaUniverseProps> = ({ spheres }) => 
 
         <group position={[0, -1, 0]}>
           <ContactShadows
-            opacity={0.3}
+            opacity={0.25}
             scale={20}
-            blur={2}
+            blur={2.5}
             far={4}
             resolution={256}
-            color="#000000"
+            color="#4A90E2"
           />
           {spheres.map(sphere => (
             <MemorySphereMesh key={sphere.id} data={sphere} mode={layoutMode} />

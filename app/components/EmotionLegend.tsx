@@ -7,13 +7,13 @@ interface EmotionLegendProps {
 }
 
 const EMOTION_INFO = {
-    joy: { icon: '✨', label_en: 'Joy', label_zh: '快乐' },
-    sadness: { icon: '💙', label_en: 'Sadness', label_zh: '悲伤' },
-    anxiety: { icon: '⚡', label_en: 'Anxiety', label_zh: '焦虑' },
-    envy: { icon: '💚', label_en: 'Envy', label_zh: '嫉妒' },
-    embarrassment: { icon: '💗', label_en: 'Embarrassment', label_zh: '尴尬' },
-    anger: { icon: '🔥', label_en: 'Anger', label_zh: '愤怒' },
-    fear: { icon: '💜', label_en: 'Fear', label_zh: '恐惧' },
+    joy: { label_en: 'Joy', label_zh: '快乐' },
+    sadness: { label_en: 'Sadness', label_zh: '悲伤' },
+    anxiety: { label_en: 'Anxiety', label_zh: '焦虑' },
+    envy: { label_en: 'Envy', label_zh: '嫉妒' },
+    embarrassment: { label_en: 'Embarrassment', label_zh: '尴尬' },
+    anger: { label_en: 'Anger', label_zh: '愤怒' },
+    fear: { label_en: 'Fear', label_zh: '恐惧' },
 };
 
 export function EmotionLegend({ isVisible = true }: EmotionLegendProps) {
@@ -41,7 +41,7 @@ export function EmotionLegend({ isVisible = true }: EmotionLegendProps) {
                                 }}
                             />
                             <span className="text-xs text-gallery-charcoal/80">
-                                {info.icon} {label}
+                                {label}
                             </span>
                         </div>
                     );

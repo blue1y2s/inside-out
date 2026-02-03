@@ -1,5 +1,4 @@
 import { PersonaDimensions } from '../types';
-import colorPalette from '../../reference/color_palette.json';
 
 export interface EmotionColor {
     name: string;
@@ -8,6 +7,61 @@ export interface EmotionColor {
     glow: string;
     description: string;
 }
+
+// Inside Out inspired emotion color palette
+const colorPalette = {
+    emotions: {
+        joy: {
+            name: 'Joy',
+            primary: '#FFD700',
+            gradient: ['#FFD700', '#FFF8DC', '#FFFACD'],
+            glow: '#FFD700',
+            description: 'Golden yellow - Achievement, positive daily moments'
+        },
+        sadness: {
+            name: 'Sadness',
+            primary: '#4A90E2',
+            gradient: ['#4A90E2', '#6BB6FF', '#87CEEB'],
+            glow: '#4A90E2',
+            description: 'Deep blue - Reflection, melancholy'
+        },
+        anxiety: {
+            name: 'Anxiety',
+            primary: '#FF6B35',
+            gradient: ['#FF6B35', '#FF8C42', '#FFA351'],
+            glow: '#FF6B35',
+            description: 'Vibrant orange - Rants, high intensity worry'
+        },
+        envy: {
+            name: 'Envy',
+            primary: '#00D9B5',
+            gradient: ['#00D9B5', '#1FFFD1', '#7FFFD4'],
+            glow: '#00D9B5',
+            description: 'Cyan-green - Comparison, aspiration'
+        },
+        embarrassment: {
+            name: 'Embarrassment',
+            primary: '#FF9ECD',
+            gradient: ['#FF9ECD', '#FFB3D9', '#FFC8E5'],
+            glow: '#FF9ECD',
+            description: 'Soft pink - Vulnerability, self-consciousness'
+        },
+        anger: {
+            name: 'Anger',
+            primary: '#E63946',
+            gradient: ['#E63946', '#FF4757', '#FF6B6B'],
+            glow: '#E63946',
+            description: 'Intense red - Strong negative emotions'
+        },
+        fear: {
+            name: 'Fear',
+            primary: '#9B59B6',
+            gradient: ['#9B59B6', '#B565D8', '#C77DFF'],
+            glow: '#9B59B6',
+            description: 'Purple - Uncertainty, caution'
+        }
+    }
+};
 
 export interface MixedEmotion {
     emotions: Array<{ name: string; weight: number; color: string }>;
