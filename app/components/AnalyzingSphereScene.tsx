@@ -80,17 +80,11 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
           ref={materialRef}
           color="#ffffff"
           emissive="#ffffff"
-          emissiveIntensity={0}
-          transparent
-          transmission={0.9}
-          thickness={1.5}
-          roughness={0.05}
-          metalness={0.02}
+          emissiveIntensity={0.2}
+          roughness={0.1}
+          metalness={0.1}
           clearcoat={1.0}
-          clearcoatRoughness={0.05}
-          ior={1.4}
-          iridescence={0.4}
-          iridescenceIOR={1.3}
+          clearcoatRoughness={0.1}
         />
       </mesh>
 
@@ -141,17 +135,6 @@ export const AnalyzingSphereScene: React.FC<AnalyzingSphereSceneProps> = (props)
       <Canvas camera={{ position: [0, 1, 6] }} gl={{ alpha: true, antialias: true }}>
         <AnalyzingContent {...props} />
       </Canvas>
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-full shadow-2xl animate-pulse">
-          <div className="w-48 h-48 rounded-full border-2 border-white/30 border-t-white/80 animate-spin" />
-        </div>
-      </div>
-      <div className="absolute top-20 w-full text-center pointer-events-none">
-        <div className="inline-flex flex-col items-center">
-          <h2 className="text-white text-xl font-light tracking-[0.3em] uppercase mb-2">Analyzing Consciousness</h2>
-          <div className="w-32 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-        </div>
-      </div>
     </div>
   );
 };
