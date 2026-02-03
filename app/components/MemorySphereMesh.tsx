@@ -11,8 +11,7 @@ interface MemorySphereMeshProps {
 
 export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }) => {
   const outerShellRef = useRef<Mesh>(null);
-  const primaryCoreRef = useRef<Mesh>(null);
-  const secondaryCoreRef = useRef<Mesh>(null);
+  const innerGlowRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
   // Random phase for independent organic movement
@@ -23,33 +22,22 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
   const humanoidVec = useMemo(() => new Vector3(...data.humanoidPosition), [data.humanoidPosition]);
   const castleVec = useMemo(() => new Vector3(...(data.castlePosition || data.timelinePosition)), [data.castlePosition, data.timelinePosition]);
 
-  // Detect if this memory has mixed emotions from data
-  const hasMixedEmotions = data.hasMixedEmotions || false;
-
-  // Primary and secondary colors
+  // Primary color
   const primaryColor = useMemo(() => new Color(data.color), [data.color]);
 
-  // Use secondary color from data if available, otherwise use a complementary color
+  // Secondary color for gradient (if mixed emotions)
   const secondaryColor = useMemo(() => {
-    if (!hasMixedEmotions) return primaryColor;
-    if (data.secondaryColor) return new Color(data.secondaryColor);
-
-    // Fallback: generate complementary color
-    const colorMap: Record<string, string> = {
-      '#FFD700': '#4A90E2', // Joy + Sadness
-      '#4A90E2': '#FFD700', // Sadness + Joy
-      '#FF6B35': '#9B59B6', // Anxiety + Fear
-      '#00D9B5': '#FFD700', // Envy + Joy
-      '#FF9ECD': '#9B59B6', // Embarrassment + Fear
-      '#E63946': '#FFD700', // Anger + Joy
-      '#9B59B6': '#4A90E2', // Fear + Sadness
-    };
-
-    return new Color(colorMap[data.color] || '#4A90E2');
-  }, [data.color, data.secondaryColor, hasMixedEmotions]);
+    if (data.hasMixedEmotions && data.secondaryColor) {
+      return new Color(data.secondaryColor);
+    }
+    // Create a slightly shifted version of primary color for depth
+    const hsv = primaryColor.clone();
+    hsv.offsetHSL(0.05, 0.1, -0.1); // Slight hue shift, more saturation, darker
+    return hsv;
+  }, [data.color, data.hasMixedEmotions, data.secondaryColor, primaryColor]);
 
   useFrame((state) => {
-    if (!outerShellRef.current || !primaryCoreRef.current) return;
+    if (!outerShellRef.current || !innerGlowRef.current) return;
     const time = state.clock.getElapsedTime();
 
     // 1. Determine Target Position
@@ -71,7 +59,7 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
     // Update outer shell
     outerShellRef.current.position.lerp(targetWithFloat, lerpSpeed);
 
-    // Gentle rotation
+    // Gentle rotation for organic feel
     outerShellRef.current.rotation.x = time * 0.15;
     outerShellRef.current.rotation.z = time * 0.1;
 
@@ -80,64 +68,57 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
     const targetScale = (hovered ? 1.4 : 1.0) * baseScale;
     outerShellRef.current.scale.lerp({ x: targetScale, y: targetScale, z: targetScale } as any, 0.1);
 
-    // Sync primary core with outer shell
-    primaryCoreRef.current.position.copy(outerShellRef.current.position);
-    primaryCoreRef.current.rotation.copy(outerShellRef.current.rotation);
-    primaryCoreRef.current.scale.copy(outerShellRef.current.scale);
-
-    // Position offset for mixed emotions (creates the overlapping venn diagram effect)
-    if (hasMixedEmotions && secondaryCoreRef.current) {
-      secondaryCoreRef.current.position.copy(outerShellRef.current.position);
-
-      // Offset secondary core slightly to create overlap
-      const offsetAmount = data.radius * 0.25;
-      secondaryCoreRef.current.position.x += Math.cos(time * 0.3) * offsetAmount;
-      secondaryCoreRef.current.position.z += Math.sin(time * 0.3) * offsetAmount;
-
-      secondaryCoreRef.current.rotation.copy(outerShellRef.current.rotation);
-      secondaryCoreRef.current.scale.copy(outerShellRef.current.scale);
-    }
+    // Sync inner glow with outer shell
+    innerGlowRef.current.position.copy(outerShellRef.current.position);
+    innerGlowRef.current.rotation.copy(outerShellRef.current.rotation);
+    innerGlowRef.current.scale.copy(outerShellRef.current.scale);
   });
 
-  const emissiveIntensity = hovered ? 1.5 : 1.0;
+  // Strong inner glow for Inside Out effect
+  const innerGlowIntensity = hovered ? 2.5 : 2.0;
+  const outerEmissiveIntensity = hovered ? 0.8 : 0.5;
 
   return (
     <group>
-      {/* Primary emotion core */}
+      {/* Inner glowing core - vibrant saturated color(s) */}
       <mesh
-        ref={primaryCoreRef}
+        ref={innerGlowRef}
         position={data.timelinePosition}
         castShadow={false}
         receiveShadow={false}
       >
-        <sphereGeometry args={[data.radius * 0.75, 32, 32]} />
-        <meshBasicMaterial
+        <sphereGeometry args={[data.radius * 0.88, 32, 32]} />
+        <meshStandardMaterial
           color={primaryColor}
-          transparent
-          opacity={hasMixedEmotions ? 0.7 : 0.8}
-          toneMapped={false}
+          emissive={primaryColor}
+          emissiveIntensity={innerGlowIntensity}
+          transparent={false}
+          roughness={0.3}
+          metalness={0.1}
         />
       </mesh>
 
-      {/* Secondary emotion core (only for mixed emotions) */}
-      {hasMixedEmotions && (
+      {/* Secondary color layer for mixed emotions (creates gradient inside) */}
+      {data.hasMixedEmotions && (
         <mesh
-          ref={secondaryCoreRef}
           position={data.timelinePosition}
           castShadow={false}
           receiveShadow={false}
         >
-          <sphereGeometry args={[data.radius * 0.75, 32, 32]} />
-          <meshBasicMaterial
+          <sphereGeometry args={[data.radius * 0.85, 32, 32]} />
+          <meshStandardMaterial
             color={secondaryColor}
+            emissive={secondaryColor}
+            emissiveIntensity={innerGlowIntensity * 0.7}
             transparent
-            opacity={0.7}
-            toneMapped={false}
+            opacity={0.5}
+            roughness={0.3}
+            metalness={0.1}
           />
         </mesh>
       )}
 
-      {/* Outer glass shell - Inside Out style */}
+      {/* Outer glass shell - Inside Out style (semi-transparent) */}
       <mesh
         ref={outerShellRef}
         position={data.timelinePosition}
@@ -150,58 +131,79 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
         <meshPhysicalMaterial
           color="#ffffff"
           emissive={primaryColor}
-          emissiveIntensity={emissiveIntensity * 0.3}
+          emissiveIntensity={outerEmissiveIntensity}
 
-          // Glass-like properties
+          // Glass-like but less transparent
           transparent
-          opacity={0.15}
-          transmission={0.95}
-          thickness={0.3}
-          roughness={0.05}
+          opacity={0.4}
+          transmission={0.5}
+          thickness={0.8}
+          roughness={0.1}
           metalness={0.0}
 
           // Reflective coating
           clearcoat={1.0}
-          clearcoatRoughness={0.05}
+          clearcoatRoughness={0.1}
 
           // Refraction
-          ior={1.45}
+          ior={1.5}
 
-          // Subtle iridescence for that magical look
-          iridescence={0.2}
-          iridescenceIOR={1.3}
+          // Subtle iridescence for magical look
+          iridescence={0.3}
+          iridescenceIOR={1.4}
         />
 
         {hovered && (
           <Html distanceFactor={12} zIndexRange={[100, 0]}>
-            <div className="glass-panel text-neutral-charcoal p-3 w-48 rounded-lg shadow-2xl transition-all duration-300 scale-100 opacity-100 bg-white/95 pointer-events-none">
-              <div className="flex justify-between items-center mb-1 border-b border-neutral-border pb-1">
-                <span className="text-[9px] uppercase tracking-widest text-neutral-charcoal font-bold opacity-60">{data.post.category}</span>
+            <div className="glass-panel text-neutral-charcoal p-3 w-52 rounded-lg shadow-2xl transition-all duration-300 scale-100 opacity-100 bg-white/95 pointer-events-none">
+              <div className="flex justify-between items-center mb-2 border-b border-neutral-border pb-2">
+                <span className="text-[9px] uppercase tracking-widest text-neutral-charcoal font-bold opacity-60">
+                  {data.post.category}
+                </span>
                 <div className="flex gap-1">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: data.color, boxShadow: `0 0 6px ${data.color}` }}></div>
-                  {hasMixedEmotions && (
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: secondaryColor.getStyle(), boxShadow: `0 0 6px ${secondaryColor.getStyle()}` }}></div>
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{
+                      backgroundColor: data.color,
+                      boxShadow: `0 0 8px ${data.color}`
+                    }}
+                  />
+                  {data.hasMixedEmotions && data.secondaryColor && (
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{
+                        backgroundColor: data.secondaryColor,
+                        boxShadow: `0 0 8px ${data.secondaryColor}`
+                      }}
+                    />
                   )}
                 </div>
               </div>
-              <p className="text-xs font-serif italic text-neutral-charcoal leading-tight">"{data.post.originalText.substring(0, 50)}{data.post.originalText.length > 50 ? '...' : ''}"</p>
+              <p className="text-xs font-serif italic text-neutral-charcoal leading-tight">
+                "{data.post.originalText.substring(0, 80)}{data.post.originalText.length > 80 ? '...' : ''}"
+              </p>
+              {data.hasMixedEmotions && (
+                <div className="mt-2 text-[8px] text-neutral-charcoal/60 uppercase tracking-wide">
+                  Mixed Emotions
+                </div>
+              )}
             </div>
           </Html>
         )}
       </mesh>
 
-      {/* Outer glow halo effect - softer and more diffuse */}
+      {/* Outer glow halo effect */}
       {mode !== 'humanoid' && (
         <mesh
           position={data.timelinePosition}
           castShadow={false}
           receiveShadow={false}
         >
-          <sphereGeometry args={[data.radius * 1.2, 32, 32]} />
+          <sphereGeometry args={[data.radius * 1.15, 32, 32]} />
           <meshBasicMaterial
             color={primaryColor}
             transparent
-            opacity={hovered ? 0.12 : 0.06}
+            opacity={hovered ? 0.15 : 0.08}
             toneMapped={false}
             depthWrite={false}
           />
