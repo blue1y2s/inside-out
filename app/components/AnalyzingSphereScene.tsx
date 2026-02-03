@@ -52,12 +52,15 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
     if (materialRef.current) {
       const colorProgress = Math.max(0, (newTime - 1.0) / 1.5);
       if (colorProgress <= 1) {
-        const end = new Color(targetColor);
-        // Fade in color and emission
-        materialRef.current.emissive.lerp(end, colorProgress * 0.5);
-        // Keep it mostly white but tint it
-        materialRef.current.color.lerp(end, colorProgress * 0.2);
-        (materialRef.current as any).emissiveIntensity = colorProgress * 2.0;
+        const targetEmotionColor = new Color(targetColor);
+
+        // Start with transparent white, gradually add emotion color
+        materialRef.current.color.set('#ffffff');
+        materialRef.current.emissive.lerp(targetEmotionColor, colorProgress);
+
+        // Gradually increase opacity and emission as memories are absorbed
+        (materialRef.current as any).opacity = 0.3 + (colorProgress * 0.7);
+        (materialRef.current as any).emissiveIntensity = colorProgress * 1.5;
       }
     }
 
@@ -80,27 +83,31 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
           ref={materialRef}
           color="#ffffff"
           emissive="#ffffff"
-          emissiveIntensity={0.2}
+          emissiveIntensity={0}
+          transparent
+          opacity={0.3}
           roughness={0.1}
-          metalness={0.1}
+          metalness={0}
           clearcoat={1.0}
-          clearcoatRoughness={0.1}
+          clearcoatRoughness={0.05}
+          ior={1.5}
         />
       </mesh>
 
-      <ContactShadows opacity={0.15} scale={10} blur={3} far={4} color="#000000" />
+      {/* No black shadows - use soft white reflection instead */}
+      <ContactShadows opacity={0.08} scale={10} blur={4} far={4} color="#E5E5E5" />
 
       {fragments.map((frag) => {
         const activeTime = Math.max(0, elapsed - frag.delay);
         const travelDuration = 1.0;
         const progress = Math.min(1, activeTime / travelDuration);
-        const ease = 1 - Math.pow(1 - progress, 4); // Quartic out
+        const ease = 1 - Math.pow(1 - progress, 4);
 
         const x = frag.startPos[0] * (1 - ease);
         const y = frag.startPos[1] * (1 - ease);
         const z = frag.startPos[2] * (1 - ease);
 
-        const scale = (1 - ease) * 0.6;
+        const scale = (1 - ease) * 0.5;
         const opacity = 1 - ease;
 
         if (progress >= 1) return null;
@@ -111,8 +118,8 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
             position={[x, y, z]}
             scale={[scale, scale, scale]}
             color="#ffffff"
-            fillOpacity={opacity}
-            fontSize={0.4}
+            fillOpacity={opacity * 0.8}
+            fontSize={0.35}
             anchorX="center"
             anchorY="middle"
             font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff"
@@ -122,9 +129,10 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
         );
       })}
 
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-      <pointLight position={[-10, -10, -10]} intensity={1} color={targetColor} />
+      {/* Bright, clean lighting - no dark elements */}
+      <ambientLight intensity={1.2} color="#ffffff" />
+      <directionalLight position={[5, 5, 5]} intensity={0.8} color="#ffffff" />
+      <pointLight position={[-5, -5, -5]} intensity={1.2} color={targetColor} />
     </group>
   );
 };
@@ -133,6 +141,7 @@ export const AnalyzingSphereScene: React.FC<AnalyzingSphereSceneProps> = (props)
   return (
     <div className="w-full h-full relative bg-transparent">
       <Canvas camera={{ position: [0, 1, 6] }} gl={{ alpha: true, antialias: true }}>
+        <color attach="background" args={['transparent']} />
         <AnalyzingContent {...props} />
       </Canvas>
     </div>

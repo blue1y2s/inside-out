@@ -97,8 +97,8 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
           emissiveIntensity={emissiveIntensity}
           distort={0.4}
           speed={3}
-          roughness={0.2}
-          metalness={0.5}
+          roughness={0.05}
+          metalness={0.3}
           radius={data.radius * 0.9}
         />
       </mesh>
@@ -114,14 +114,14 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
             speed={4}
             transparent
             opacity={0.7}
-            roughness={0.2}
+            roughness={0.05}
           />
         </mesh>
       )}
 
       {/* 
           2. OUTER SHELL: The glassy container.
-          High clearcoat and lower transmission to show the core glow but maintain surface reflections.
+          Reduced opacity to let colors shine through more vibrantly.
       */}
       <mesh
         ref={outerShellRef}
@@ -135,8 +135,8 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
         <meshPhysicalMaterial
           color="#ffffff"
           transparent
-          opacity={0.3}
-          transmission={0.4} // Enough to see inside, but keeps surface glossy
+          opacity={0.15}
+          transmission={0.5}
           thickness={1.5}
           roughness={0}
           metalness={0}
