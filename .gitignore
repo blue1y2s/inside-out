@@ -39,3 +39,7 @@ reference/movie/
 .cache/
 Second-Me-1.0.1/
 temp_inside_out/
+dist/
+visualization/
+*.bundle.js
+*.bundle.*.js

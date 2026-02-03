@@ -124,6 +124,42 @@ export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
       ];
     }
 
+    // --- Mixed Emotion Detection (Inside Out style) ---
+    // Detect if this memory contains complex, mixed emotions
+    const text = post.originalText.toLowerCase();
+    const sentiment = post.sentimentScore;
+    const intensity = post.intensity;
+
+    // Mixed emotion indicators
+    const hasBothPositiveNegative = Math.abs(sentiment) < 0.4 && intensity > 2.5; // Neutral but intense
+    const hasConflictingKeywords = (
+      (text.includes('but') || text.includes('however') || text.includes('though')) &&
+      (text.includes('happy') || text.includes('sad') || text.includes('excited') || text.includes('worried'))
+    );
+    const isHighComplexity = intensity >= 4 && post.category === 'relationship';
+
+    const hasMixedEmotions = hasBothPositiveNegative || hasConflictingKeywords || isHighComplexity;
+
+    // Determine secondary color for mixed emotions
+    let secondaryColor: string | undefined;
+
+    if (hasMixedEmotions) {
+      // Mixed emotion color pairs (based on Inside Out emotional combinations)
+      if (sentiment > 0 && intensity > 3) {
+        // Joy + Anxiety = Excitement/Nervousness
+        secondaryColor = '#FF6B35'; // Anxiety
+      } else if (sentiment < -0.2 && intensity < 3) {
+        // Sadness + Fear = Melancholy
+        secondaryColor = '#9B59B6'; // Fear
+      } else if (Math.abs(sentiment) < 0.3) {
+        // Neutral with high intensity = Joy + Sadness
+        secondaryColor = sentiment >= 0 ? '#4A90E2' : '#FFD700'; // Complement
+      } else {
+        // Default: Pair with Joy or Sadness
+        secondaryColor = color === '#FFD700' ? '#4A90E2' : '#FFD700';
+      }
+    }
+
     return {
       id: post.id,
       post,
@@ -131,7 +167,9 @@ export function layoutMemorySpheres(posts: AnalyzedPost[]): MemorySphere[] {
       color,
       timelinePosition: [tX, tY, tZ],
       humanoidPosition: humanoidPos,
-      castlePosition: castlePos
+      castlePosition: castlePos,
+      hasMixedEmotions,
+      secondaryColor
     };
   });
 }
