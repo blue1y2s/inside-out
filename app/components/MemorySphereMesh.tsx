@@ -165,19 +165,7 @@ export const MemorySphereMesh: React.FC<MemorySphereMeshProps> = ({ data, mode }
         )}
       </mesh>
 
-      {/* 
-          3. HALO/BLOOM: Extra soft glow around the sphere.
-      */}
-      <mesh position={data.timelinePosition}>
-        <sphereGeometry args={[data.radius * 1.3, 32, 32]} />
-        <meshBasicMaterial
-          color={primaryColor}
-          transparent
-          opacity={hovered ? 0.15 : 0.08}
-          depthWrite={false}
-          blending={2} // Additive blending
-        />
-      </mesh>
+
     </group>
   );
 };
