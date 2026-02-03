@@ -17,8 +17,8 @@ const AnalyzingContent: React.FC<AnalyzingSphereSceneProps> = ({ scenePhase, onP
   const [elapsed, setElapsed] = useState(0);
 
   // Hanbaiyu (White Jade) Color Palette
-  // Warm, milky white, not harsh clinical white
-  const JADE_WHITE = new Color("#F9F9F7");
+  // Cool, mysterious white with slight purple undertone
+  const JADE_WHITE = new Color("#F8F6FA");
   const startColor = new Color("#FFFFFF");
 
   // Text fragments spiraling in
