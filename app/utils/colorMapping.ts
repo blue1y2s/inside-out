@@ -9,41 +9,38 @@ export interface EmotionColor {
     description: string;
 }
 
+export interface MixedEmotion {
+    emotions: Array<{ name: string; weight: number; color: string }>;
+    dominantColor: string;
+    blendedColor: string;
+}
+
 /**
  * Maps personality dimensions to Inside Out emotion colors
- * Based on the personality dimensions: extraversion, emotionality, warmth, conscientiousness, confidence
  */
 export function getEmotionFromDimensions(dimensions: PersonaDimensions): EmotionColor {
     const { extraversion, emotionality, warmth, conscientiousness, confidence } = dimensions;
 
-    // Determine dominant emotion based on personality dimensions
-    let dominantEmotion = 'joy'; // default
+    let dominantEmotion = 'joy';
 
-    // High emotionality → Anxiety
     if (emotionality > 0.6) {
         dominantEmotion = 'anxiety';
     }
-    // Low extraversion + high emotionality → Sadness
     else if (extraversion < 0.4 && emotionality > 0.4) {
         dominantEmotion = 'sadness';
     }
-    // High warmth + high extraversion → Joy
     else if (warmth > 0.6 && extraversion > 0.6) {
         dominantEmotion = 'joy';
     }
-    // Low warmth + low confidence → Embarrassment
     else if (warmth < 0.4 && confidence < 0.4) {
         dominantEmotion = 'embarrassment';
     }
-    // High conscientiousness + moderate emotionality → Anxiety
     else if (conscientiousness > 0.7 && emotionality > 0.3) {
         dominantEmotion = 'anxiety';
     }
-    // Low confidence + high emotionality → Fear
     else if (confidence < 0.3 && emotionality > 0.5) {
         dominantEmotion = 'fear';
     }
-    // Moderate all traits → Envy (comparison, aspiration)
     else if (Math.abs(extraversion - 0.5) < 0.2 && Math.abs(warmth - 0.5) < 0.2) {
         dominantEmotion = 'envy';
     }
@@ -52,12 +49,97 @@ export function getEmotionFromDimensions(dimensions: PersonaDimensions): Emotion
 }
 
 /**
- * Get emotion color for a specific post based on its sentiment and content
+ * Get mixed emotions from post - Inside Out style where memories can have multiple emotions
+ */
+export function getMixedEmotionsFromPost(sentiment: number, intensity: number, text: string): MixedEmotion {
+    const emotions: Array<{ name: string; weight: number; color: string }> = [];
+
+    // Analyze text for emotion keywords
+    const textLower = text.toLowerCase();
+
+    // Joy indicators
+    const joyKeywords = ['happy', 'excited', 'great', 'amazing', 'wonderful', 'love', 'awesome', '😊', '😄', '🎉', '❤️'];
+    const joyScore = joyKeywords.filter(word => textLower.includes(word)).length;
+
+    // Sadness indicators
+    const sadnessKeywords = ['sad', 'miss', 'lost', 'gone', 'cry', 'tear', 'lonely', '😢', '😞', '💔'];
+    const sadnessScore = sadnessKeywords.filter(word => textLower.includes(word)).length;
+
+    // Anxiety indicators
+    const anxietyKeywords = ['worry', 'anxious', 'stress', 'nervous', 'afraid', 'scared', 'panic', '😰', '😨'];
+    const anxietyScore = anxietyKeywords.filter(word => textLower.includes(word)).length;
+
+    // Multiple emotions present - mixed memory!
+    if (sentiment > 0.3) {
+        emotions.push({
+            name: 'joy',
+            weight: Math.min(sentiment * intensity, 1.0),
+            color: colorPalette.emotions.joy.primary
+        });
+    }
+
+    if (sentiment < -0.2) {
+        emotions.push({
+            name: 'sadness',
+            weight: Math.min(Math.abs(sentiment) * intensity, 1.0),
+            color: colorPalette.emotions.sadness.primary
+        });
+    }
+
+    if (intensity > 0.6) {
+        emotions.push({
+            name: 'anxiety',
+            weight: intensity * 0.8,
+            color: colorPalette.emotions.anxiety.primary
+        });
+    }
+
+    if (anxietyScore > 0) {
+        emotions.push({
+            name: 'anxiety',
+            weight: Math.min(anxietyScore * 0.3, 1.0),
+            color: colorPalette.emotions.anxiety.primary
+        });
+    }
+
+    if (sadnessScore > 0) {
+        emotions.push({
+            name: 'sadness',
+            weight: Math.min(sadnessScore * 0.3, 1.0),
+            color: colorPalette.emotions.sadness.primary
+        });
+    }
+
+    // If no strong emotions detected, default to neutral joy
+    if (emotions.length === 0) {
+        emotions.push({
+            name: 'joy',
+            weight: 0.5,
+            color: colorPalette.emotions.joy.primary
+        });
+    }
+
+    // Normalize weights
+    const totalWeight = emotions.reduce((sum, e) => sum + e.weight, 0);
+    emotions.forEach(e => e.weight = e.weight / totalWeight);
+
+    // Sort by weight
+    emotions.sort((a, b) => b.weight - a.weight);
+
+    // Blend colors
+    const blendedColor = blendColors(emotions.map(e => ({ color: e.color, weight: e.weight })));
+
+    return {
+        emotions,
+        dominantColor: emotions[0].color,
+        blendedColor
+    };
+}
+
+/**
+ * Get emotion color for a specific post (legacy compatibility)
  */
 export function getEmotionFromPost(sentiment: number, intensity: number): EmotionColor {
-    // sentiment: -1 (negative) to 1 (positive)
-    // intensity: 0 to 1
-
     if (sentiment > 0.5 && intensity > 0.6) {
         return colorPalette.emotions.joy;
     } else if (sentiment < -0.5 && intensity > 0.5) {
@@ -69,17 +151,35 @@ export function getEmotionFromPost(sentiment: number, intensity: number): Emotio
     } else if (sentiment > 0.2 && sentiment < 0.6) {
         return colorPalette.emotions.envy;
     } else {
-        // Default to a neutral emotion
         return colorPalette.emotions.joy;
     }
 }
 
 /**
- * Blend multiple emotion colors based on weights
+ * Blend multiple colors based on weights - creates gradient-like mixed emotions
+ */
+function blendColors(colors: Array<{ color: string; weight: number }>): string {
+    let r = 0, g = 0, b = 0;
+
+    colors.forEach(({ color, weight }) => {
+        const rgb = hexToRgb(color);
+        r += rgb.r * 255 * weight;
+        g += rgb.g * 255 * weight;
+        b += rgb.b * 255 * weight;
+    });
+
+    const toHex = (n: number) => {
+        const hex = Math.round(n).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    };
+
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+/**
+ * Blend multiple emotion colors based on weights (legacy)
  */
 export function blendEmotionColors(emotions: Array<{ emotion: string; weight: number }>): string {
-    // For now, return the dominant emotion's primary color
-    // In the future, this could do actual color blending
     const dominant = emotions.reduce((prev, current) =>
         current.weight > prev.weight ? current : prev
     );
