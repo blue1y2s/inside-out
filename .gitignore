@@ -30,7 +30,7 @@ Thumbs.db
 *.backup
 
 # Large files
-reference/movie/
+reference/
 *.mp4
 *.mov
 
@@ -39,6 +39,19 @@ reference/movie/
 .cache/
 Second-Me-1.0.1/
 temp_inside_out/
+
+# Internal documentation (keep private)
+SECURITY*.md
+VERIFICATION*.md
+COMPARISON*.md
+DEPLOYMENT_GUIDE.md
+demo/
+music/
+scripts/
+visualization/
+
+# Agent workspace
+.agent/
 dist/
 visualization/
 *.bundle.js
